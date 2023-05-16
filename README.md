@@ -1,2 +1,2 @@
 # SMC_Projects
-Assignments completed while taking various courses in programming at SMC (during high school).
+Assignments completed while taking various programming courses at SMC (during high school).
