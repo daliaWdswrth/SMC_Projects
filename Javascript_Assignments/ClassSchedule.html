@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            /* Defines a cleaner look for tables */
+            table { border-collapse: collapse; }
+            td, th { border: 1px solid black; padding: 3px 8px; }
+            th { text-align: left; }</style>
+    </head>
+<body>
+    <script>
+
+        //table data
+        var CLASS_SCHEDULE = [
+        {
+            Week: 1,
+            Begins: "03/08",
+            Topics: ["Introduction", "Chapter 1: Values Types Operators"],
+            Work: [" Assignment 1 due 11:59pm 03/14"]
+        },
+        {
+            Week: 2,
+            Begins: "03/15",
+            Topics: ["Chapter 2: Programming Structure"],
+            Work: [" Assignment 2 due 11:59pm 03/22"]
+        },
+        {
+            Week: 3,
+            Begins: "03/22",
+            Topics: ["Chapter 3: Functions"],
+            Work: [" Assignment 3 due 11:59pm 03/28"]
+        },
+        {
+            Week: 4,
+            Begins: "03/29",
+            Topics: ["Chapter 4: Data Structures: Object and Arrays"],
+            Work: [" Assignment 4 due 11:59pm 04/04"]
+        },
+        {
+            Week: 5,
+            Begins: "04/05",
+            Topics: ["Chapter 5: Higher-order Functions"],
+            Work: [" Assignment 5 due 11:59pm 04/11"]
+        },
+        {
+            Week: 6,
+            Begins: "04/19",
+            Topics: ["Chapter 6: The Secret Life of Objects", "Chapter 8: Bugs and Errors"],
+            Work: [" Assignment 6 due 11:59pm 04/25"]
+        },
+        {
+            Week: 7,
+            Begins: "04/26",
+            Topics: ["Chapter 13: Javascript and the Browser", "Chapter 14: The Document Object Model"],
+            Work: [" Assignment 7 due 11:59pm 05/02"]
+        },
+        {
+            Week: 8,
+            Begins: "05/03",
+            Topics: ["Chapter 11: Asynchronous Programming", "Chapter 15: Handling Events"],
+            Work: [" Assignment 8 due 11:59pm 05/09"]
+        },
+        {
+            Week: 9,
+            Begins: "05/10",
+            Topics: ["Chapter 18: HTTP and Forms"],
+            Work: [" Assignment 9 due 11:59pm 05/16"]
+        },
+        {
+            Week: 10,
+            Begins: "05/17",
+            Topics: ["Chapter 20: Node.js & Express.js"],
+            Work: [" Assignment 10 due 11:59pm 05/23"]
+        },
+        {
+            Week: 11,
+            Begins: "05/24",
+            Topics: ["Web Application & AJAX + JQuery"],
+            Work: ["Bonus Assignment due 11:59pm 05/30"]
+        },
+        {
+            Week: 12,
+            Begins: "05/31",
+            Topics: ["Final Exam & Project"],
+            Work: ["Test due 11:59pm 06/03 & Final Project due 11:59pm 06/05"]
+        }
+        ];
+
+        //create table
+        function buildTable(data) {
+            let table = document.createElement("table");
+            //create top row, get object names (titles of each row for each module)
+            let fields = Object.keys(data[0]);
+            let topRow = document.createElement("tr");
+            //week, begins, topic, work
+            fields.forEach(function(field) {
+                let topCell = document.createElement("th");
+                topCell.appendChild(document.createTextNode(field));
+                topRow.appendChild(topCell);
+            });
+            table.appendChild(topRow);
+
+            //create cells holding schedule info
+            data.forEach(function(object) {
+                let row = document.createElement("tr");
+                fields.forEach(function(field) {
+                    let cell = document.createElement("td");
+                     cell.appendChild(document.createTextNode(object[field]));
+                    //align numeric cells to the left
+                    if (typeof object[field] == "number") {
+                        cell.style.textAlign = "left";
+                    }
+                    row.appendChild(cell);
+                });
+                table.appendChild(row);
+            });
+
+            return table;
+        }
+        //Appending table to correct element 
+        document.body.appendChild(buildTable(CLASS_SCHEDULE));
+    </script>
+</body>
+</html>

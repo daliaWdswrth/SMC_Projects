@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Books - ExpressJS Web Application</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                var asyncRequest;
+
+                $("#submit").click(function() {
+                    var title = $("#title").val();
+                    var url = "http://localhost:3000/book?title=" + title;
+                    var xhttp = new XMLHttpRequest();
+                    xhttp.onreadystatechange = function() {
+                        if (this.readyState == 4 && this.status == 200) {
+                            var info = JSON.parse(this.responseText);
+                            $("#data-title").val(info.book.title);
+                            $("#data-author").val(info.book.author);
+                            $("#data-pages").val(info.book.pages);
+                            $("#data-condition").val(info.book.quality);
+                        }
+                    };
+                    xhttp.open("GET", url, true);
+                    xhttp.send();
+                });
+
+                //view only book titles
+                $("#viewTitles").click(function() {
+                    var $list = $('#list');
+                    var xhttp = new XMLHttpRequest();
+                    var url = "http://localhost:3000/books";
+                    xhttp.onreadystatechange = function() {
+                        if (this.readyState == 4 && this.status == 200) {
+                            var info = JSON.parse(this.responseText);
+                            
+                            $.each(info, function(title, value) {
+                                $list.append('<li>' + value.title + '</li>')
+                                });
+                            
+                        }
+                    };
+                    xhttp.open("GET", url, true);
+                    xhttp.send();
+                    $(this).prop('disabled', true);
+                });
+
+                //view only total number of pages
+                $("#viewPages").click(function() {
+                    var sum = 0
+                    var xhttp = new XMLHttpRequest();
+                    var url = "http://localhost:3000/books";
+                    xhttp.onreadystatechange = function() {
+                        if (this.readyState == 4 && this.status == 200) {
+                            var info = JSON.parse(this.responseText);
+                            
+                            $.each(info, function(title, value) {
+                                sum += value.pages
+                                
+                            });
+                            
+                        }
+                        $("#total-pages").val(sum);
+                    };
+                    xhttp.open("GET", url, true);
+                    xhttp.send();
+                    $(this).prop('disabled', true);
+                });
+
+                
+            });
+        </script>
+        <style>
+            input { width: 100px }
+            #output { width: 200px}
+            .data {
+                margin-bottom: 5px;
+            }
+            .finput { 
+                float: right;
+            }
+            label {
+                display: inline-block;
+                text-align: right;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="search">
+            Search Book Title:<br><br>
+            <input id="title" type="text" name="book_title" />
+            <button id="submit" type="button">Search</button><br><br>
+        </div>
+        <div id="output">
+            Data:<br><br>
+            <label class="data" for="data-title">Title</label>
+            <input id="data-title" class="finput" type="text" name="book_info"/>
+            <br>
+            <label class="data" for="data-author">Author</label>
+            <input id="data-author" class="finput" type="text" name="book_info"/>
+            <br>
+            <label class="data" for="data-pages"># Pages</label>
+            <input id="data-pages" class="finput" type="text" name="book_info"/>
+            <br>
+            <label class="data" for="data-condition">Condition</label>
+            <input id="data-condition" class="finput" type="text" name="book_info"/><br><br>
+
+            <div class="titles">
+                View All Book Titles:<br>
+                <button id="viewTitles" type="button">Search</button><br><br>
+            </div>
+            <label class="titles" for="allbooks">Titles:</label>
+            <ul id="list">
+            </ul>
+
+            <div class="pages">
+                View Total Pages:<br>
+                <button id="viewPages" type="button">Search</button><br><br>
+            </div>
+            <label class="pages" for="total-pages"> Total # Pages:</label>
+            <input id="total-pages" class="finput" type="text" name="pages_info"/><br><br>
+
+        </div>
+    </body>
+</html>
